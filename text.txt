@@ -1,0 +1,1 @@
+JetBrains RubyMine – zintegrowane środowisko programistyczne przeznaczone do tworzenia oprogramowania w języku Ruby, w szczególności aplikacji webowych w frameworku Ruby on Rails. RubyMine został stworzony w oparciu o IntelliJ IDEA tego samego producenta.
