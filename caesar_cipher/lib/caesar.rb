@@ -1,16 +1,19 @@
-module Caesar
+# frozen_string_literal: true
 
-  def get_cipler(user_string)
+module Caesar
+  def cipler(user_string)
     hash = get_hash_with_letter_A_Z
-    cipler_string = ""
-    user_string.each_char do |letter|
-      if !letter.to_s.match?(/[A-Za-z]/)
+    cipler_string = ''
+    user_string.split('').each do |letter|
+      unless letter.match?(/[A-Za-z]/)
         cipler_string << letter.to_s
-      elsif letter.to_s.match?(/[A-Z]/)
-        cipler_string << hash.key(get_index_cipler_letter(hash[letter.to_s.downcase])).upcase
-      else
-        cipler_string << hash.key(get_index_cipler_letter(hash[letter.to_s]))
+        next
       end
+      cipler_string << if letter.to_s.match?(/[A-Z]/)
+                         hash.key(get_index_cipler_letter(hash[letter.downcase])).upcase
+                       else
+                         hash.key(get_index_cipler_letter(hash[letter]))
+                       end
     end
     cipler_string
   end
@@ -22,20 +25,22 @@ module Caesar
 
   def get_index_cipler_letter(index)
     value = index + MOTION_OF_CIPHER
-    if value > INDEX_LAST_LATTER_IN_HASH
-      return value - INDEX_LAST_LATTER_IN_HASH
-    end
+    return value - INDEX_LAST_LATTER_IN_HASH if value > INDEX_LAST_LATTER_IN_HASH
 
     value
   end
 
+  def post
+    @post ||= Post.find(number: 123)
+  end
+
   def get_hash_with_letter_A_Z
-    hash = Hash.new
-    index = 0
-    ('a'..'z').each do |letter|
-      hash[letter] = index
-      index += 1
+    return @hash if defined? @hash
+
+    @hash = {}
+    ('a'..'z').each_with_index do |key, value|
+      @hash[key] = value
     end
-    hash
+    @hash
   end
 end

@@ -1,10 +1,9 @@
+# frozen_string_literal: true
 
 require_relative 'lib/caesar'
 
 include Caesar
 
+puts 'Enter a massage'
 
-puts "Enter a massage"
-puts "your cipler massege => " + Caesar.get_cipler(gets.chomp)
-
-
+puts "your cipler massege =>  #{Caesar.cipler(gets.chomp)}"
