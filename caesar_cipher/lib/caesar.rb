@@ -1,6 +1,36 @@
-# frozen_string_literal: true
+# frozen_string_literal: false
 
 module Caesar
+
+  def cipler_ascii(user_string)
+    cipler_string = ''
+    user_string.split('').each do |letter|
+      index = letter.ord
+      case index
+      when FIRST_BIG_LETTER..LAST_BIG_LETTER
+        #do
+        index += MOTION_OF_CIPHER
+        unless index <= LAST_BIG_LETTER
+          cipler_string << (FIRST_BIG_LETTER + index - LAST_BIG_LETTER).chr
+          next
+        end
+        cipler_string << index.chr
+      when FIRST_LITTLE_LETTER..LAST_LITTLE_LETTER
+        index += MOTION_OF_CIPHER
+        unless index < LAST_LITTLE_LETTER
+          cipler_string << (FIRST_LITTLE_LETTER + index - LAST_LITTLE_LETTER).chr
+          next
+        end
+        cipler_string << index.chr
+      else
+        cipler_string << letter
+      end
+    end
+    cipler_string
+  end
+
+
+
   def cipler(user_string)
     hash = get_hash_with_letter_A_Z
     cipler_string = ''
@@ -19,9 +49,12 @@ module Caesar
   end
 
   private
-
-  INDEX_LAST_LATTER_IN_HASH = 25
   MOTION_OF_CIPHER = 5
+  FIRST_LITTLE_LETTER = 65
+  LAST_LITTLE_LETTER = 90
+  FIRST_BIG_LETTER = 97
+  LAST_BIG_LETTER = 122
+  INDEX_LAST_LATTER_IN_HASH = 25
 
   def get_index_cipler_letter(index)
     value = index + MOTION_OF_CIPHER
@@ -30,9 +63,6 @@ module Caesar
     value
   end
 
-  def post
-    @post ||= Post.find(number: 123)
-  end
 
   def get_hash_with_letter_A_Z
     return @hash if defined? @hash
@@ -44,3 +74,4 @@ module Caesar
     @hash
   end
 end
+
